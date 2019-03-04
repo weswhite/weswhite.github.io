@@ -5,8 +5,17 @@
   "author": "Wes White <wtealwhite@gmail.com>",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "start": "parcel index.html",
+    "predeploy": "rm -rf dist && parcel build index.html",
+    "deploy": "gh-pages -d dist"
+  },
   "dependencies": {
+    "gh-pages": "^2.0.1",
     "simple-icons": "^1.9.22",
     "three": "^0.102.1"
+  },
+  "devDependencies": {
+    "cssnano": "^4.1.10"
   }
 }
