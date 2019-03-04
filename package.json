@@ -1,0 +1,12 @@
+{
+  "name": "weswhite.github.io",
+  "version": "1.0.0",
+  "repository": "https://github.com/weswhite/weswhite.github.io.git",
+  "author": "Wes White <wtealwhite@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "simple-icons": "^1.9.22",
+    "three": "^0.102.1"
+  }
+}
