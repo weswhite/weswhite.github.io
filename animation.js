@@ -1,58 +1,40 @@
-(function() {
-    let noiseMax = 1
-    let zoff = 0
-    
-    window.addEventListener('resize', resizeCanvas, false);
-    function resizeCanvas() {
-        var r = 200
-        var c = document.querySelector("canvas");
-        var ctx = c.getContext("2d");
-        c.width = window.innerWidth;
-        c.height = window.innerHeight;
-        var radius = 200;
-        ctx.strokeStyle = "#FFF";
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        // for(var a = 0; a <= 2 * Math.PI; a+=.03){
-        //     // let xoff = mapRange(Math.cos(a), -1, 1, 0, noiseMax)
-        //     // let yoff = mapRange(Math.sin(a), -1, 1, 0, noiseMax)
-        //     // let r = mapRange(noise.perlin2(xoff, yoff, zoff), 0, 1, 100, 200)
-        //     let x = 200 * Math.cos(a)
-        //     let y = 200 * Math.sin(a)
-        //     ctx.moveTo(x, y);
-        //     ctx.lineTo(x, y);
-        // }
-        ctx.arc(c.width/2, c.height/2, r, 0, 2 * Math.PI);
-        ctx.stroke();
-    }
-    
-    resizeCanvas();
+var canvas = document.querySelector("#canvas");
+canvas.height = window.innerHeight
+canvas.width = window.innerWidth
+var ctx = canvas.getContext('2d');
+ctx.fillStyle = 'black'
+ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    function draw() {
-       
-    }
+var ball = {
+    x: 0,
+    y: canvas.height/2,
+    radius: 50,
+    speed_x: .8,
+    speed_y: .1,
+    angle: 0,
+    color: 'white'
+}
 
-    function mapRange (value, a, b, c, d) {
-        value = (value - a) / (b - a);
-        return c + value * (d - c);
-    }
-})();
+function draw() {
+  ctx.fillStyle = 'black'
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.beginPath();
+  ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2, false);
+  ctx.fillStyle = ball.color;
+  ctx.fill();
+  ctx.closePath();
+  ball.y = (canvas.height / 2 + Math.sin(radians(ball.angle)) * canvas.height / 2) - 60;
+  ball.x = (canvas.height/ 2 + Math.cos(radians(ball.angle)) * canvas.height / 2) + canvas.width / 3;
+  ball.angle += ball.speed_x
+}
 
+(function update() {
+  draw();
+  requestAnimationFrame(() =>{
+    update();
+  });
+}());
 
-// export function draw () {
-//     background(0)
-//     translate( width/2, height/2)
-//     stroke(255)
-//     noFill()
-//     beginShape()
-//     for(var a = 0; a <= TWO_PI; a+=.03){
-//         let xoff = map(cos(a), -1, 1, 0, noiseMax)
-//         let yoff = map(sin(a), -1, 1, 0, noiseMax)
-//         let r = map(noise(xoff, yoff, zoff), 0, 1, 100, 200)
-//         let x = r * cos(a)
-//         let y = r * sin(a)
-//         vertex(x, y)
-//     }
-//     endShape(CLOSE)
-//     zoff += .01
-// }
+function radians (angle) {
+  return angle * (Math.PI / 180);
+}
